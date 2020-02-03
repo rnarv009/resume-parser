@@ -1,12 +1,13 @@
 import re
-# from pdftotext import convert_pdf_to_txt
+from source.pdftotext import convert_pdf_to_txt
 import nltk
+from source.run import Predictor
 
 
 def preprocess(document):
     lines = [l.strip() for l in document.split("\n") if len(l) > 0]
-    lines = [nltk.word_tokenize(l) for l in lines]
-    lines = [nltk.pos_tag(l) for l in lines]
+    # lines = [nltk.word_tokenize(l) for l in lines]
+    # lines = [nltk.pos_tag(l) for l in lines]
     sentences = nltk.sent_tokenize(document)
     sentences = [nltk.word_tokenize(sent) for sent in sentences]
     tokens = sentences
@@ -41,9 +42,28 @@ def getEmail(document):
     return email[0]
 
 
+def getName(document):
+    name_app = Predictor()
+    # print("Documents", document)
+    names = []
+    for line in document:
+        try:
+            # print("line:", line)
+            pred = name_app.test([line.strip().lower()])
+            name = re.findall('<NOUN[^>]*>([^<]*)<\/NOUN>', str(pred))
+            name = (''.join(name)).strip()
+            if name!='' and name not in names:
+                names.append(name)
+        except Exception as e:
+            # print(e)
+            pass
+    return names[0]
+
+
 if __name__ == "__main__":
     document = convert_pdf_to_txt('../data/Rahul_Verma.pdf')
     tokens, lines, sentences = preprocess(document)
     # print(sentences[0])
     print("Emaial id:", getEmail(document))
     print("Phone Number:", getPhone(document))
+    print("Person Name:", getName(document))
