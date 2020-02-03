@@ -42,8 +42,6 @@ def getEmail(document):
 
 
 if __name__ == "__main__":
-    # document = convert_pdf_to_txt('../data/Lakshman patel 1-converted.pdf')
-    # document = convert_pdf_to_txt('../data/Shashi_Patel.pdf')
     document = convert_pdf_to_txt('../data/Rahul_Verma.pdf')
     tokens, lines, sentences = preprocess(document)
     # print(sentences[0])

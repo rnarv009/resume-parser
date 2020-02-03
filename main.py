@@ -15,10 +15,7 @@ def load_resume():
     return resume
 
 
-# @app.route('/resume-parser/email', methods=['GET'])
-# def email_extractor():
-#     query = request.args.get('q')
-#     return email
+
 
 if __name__ == "__main__":
     resume = load_resume()
