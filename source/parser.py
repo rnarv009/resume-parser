@@ -1,7 +1,7 @@
 import re
 from source.pdftotext import convert_pdf_to_txt
 import nltk
-from source.run import Predictor
+from source.name_extractor import Predictor
 
 
 def preprocess(document):
